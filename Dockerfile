@@ -3,5 +3,5 @@ RUN apt update
 RUN pip install flask
 WORKDIR /app
 COPY . .
-EXPOSE 8080
+EXPOSE 5000
 ENTRYPOINT ["python", "app.py"]
