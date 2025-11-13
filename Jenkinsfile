@@ -1,10 +1,15 @@
+ //In a single branch, there are three Dockerfiles
+//for Java, Python, and Nginx. The Docker images must be created simultaneously
+//for all three (Python, Java, and Nginx) and pushed to Docker Hub using Jenkins.
+
 pipeline {
     agent any
        
     stages{
         stage ('Cloning repository'){
             steps {
-                git 'https://github.com/Siva825/python-flask.git'
+               sh 'rm -rf python-flask || true'
+               sh 'git clone https://github.com/Siva825/python-flask.git'
             }   
         }
         stage ('Building python image'){
@@ -33,7 +38,8 @@ pipeline {
             DOCKERHUB_CREDENTIALS = credentials('docker-creds')
         }
             steps {
-               
+            // deleting all existing images if any build fails if only it fails dont need error for first time
+                    sh 'docker image prune -f|| true'
                     sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
                     sh 'docker push siva2626/python_image:latest'
                     sh 'docker push siva2626/java_image:latest'
@@ -44,3 +50,4 @@ pipeline {
     }
 }
  
+
