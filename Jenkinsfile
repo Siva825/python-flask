@@ -17,7 +17,7 @@ pipeline {
                 stage('Build Python Image') {
                     steps {
                         dir('python') {
-                            sh 'docker build -t siva2626/python_image:latest .'
+                            sh 'docker build -t siva2626/python_image1:v2 .'
                         }
                     }
                 }
@@ -25,7 +25,7 @@ pipeline {
                 stage('Build Java Image') {
                     steps {
                         dir('java') {
-                            sh 'docker build -t siva2626/java_image:latest .'
+                            sh 'docker build -t siva2626/java_image1:v2 .'
                         }
                     }
                 }
@@ -33,7 +33,7 @@ pipeline {
                 stage('Build Nginx Image') {
                     steps {
                         dir('nginx') {
-                            sh 'docker build -t siva2626/nginx_image:latest .'
+                            sh 'docker build -t siva2626/nginx_image1:v2 .'
                         }
                     }
                 }
@@ -44,9 +44,9 @@ pipeline {
             steps {
                 sh """
                     docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW
-                    docker push siva2626/python_image:latest
-                    docker push siva2626/java_image:latest
-                    docker push siva2626/nginx_image:latest
+                    docker push siva2626/python_image1:v2
+                    docker push siva2626/java_image1:v2
+                    docker push siva2626/nginx_image1:v2
                 """
             }
         }
